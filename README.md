@@ -459,8 +459,3 @@ Vercel automatically uses `vercel.json` for SPA routing and security headers.
 9. **OpenAI / Gemini fallback** — Detect Groq outages and automatically fail over to a secondary provider.
 10. **Redis rate limiting** — Replace in-memory rate limiter with Redis for multi-instance deployments.
 
----
-
-## License
-
-MIT — see [LICENSE](LICENSE).
