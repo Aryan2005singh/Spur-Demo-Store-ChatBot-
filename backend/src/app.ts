@@ -38,7 +38,8 @@ app.use(helmet());
 // CORS
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined,
+  callback: (error: Error | null, allow?: boolean) => void) => {
       // Allow requests with no origin (mobile apps, Postman, curl)
       if (!origin) return callback(null, true);
       // In production, restrict to configured origin(s)
