@@ -1,0 +1,42 @@
+# render.yaml — Render.com infrastructure definition
+# Docs: https://render.com/docs/blueprint-spec
+#
+# Deploy: connect your GitHub repo to Render, it auto-detects this file.
+# Set the environment variables in Render dashboard (or via envVarGroups).
+
+services:
+  - type: web
+    name: spur-support-chat-backend
+    runtime: node
+    region: oregon  # Change to: frankfurt | singapore | ohio as needed
+    plan: free      # Upgrade to starter ($7/mo) for always-on (no cold starts)
+
+    rootDir: backend
+
+    buildCommand: npm ci && npm run db:generate && npm run build
+    startCommand: npm run db:migrate && npm start
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: PORT
+        value: 3001
+
+      # Set these in Render dashboard — do NOT commit actual values:
+      - key: DATABASE_URL
+        sync: false  # Render will prompt you to set this manually
+
+      - key: GROQ_API_KEY
+        sync: false
+
+      - key: LLM_PROVIDER
+        value: groq
+
+      - key: CORS_ORIGIN
+        sync: false  # Set to your Vercel frontend URL e.g. https://spur-chat.vercel.app
+
+      - key: RATE_LIMIT_MAX
+        value: 100
